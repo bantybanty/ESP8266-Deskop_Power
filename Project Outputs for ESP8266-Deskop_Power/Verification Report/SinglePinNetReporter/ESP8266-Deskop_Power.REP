@@ -1,0 +1,13 @@
+------------------------------------------------------------
+Single Pin Net Report for ESP8266-Deskop_Power.PrjPcb
+-- 06-12-2024
+-- 20:19:55
+------------------------------------------------------------
+
+Net GPIO11 has only one pin (Pin IC1E-9)
+Net GPIO10 has only one pin (Pin IC1E-12)
+Net GPIO9 has only one pin (Pin IC1E-11)
+Net GPIO8 has only one pin (Pin IC1E-13)
+Net GPIO7 has only one pin (Pin IC1E-10)
+Net GPIO6 has only one pin (Pin IC1E-14)
+Net ADC has only one pin (Pin IC1E-2)

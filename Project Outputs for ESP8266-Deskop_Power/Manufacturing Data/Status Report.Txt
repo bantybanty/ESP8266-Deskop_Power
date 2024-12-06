@@ -1,0 +1,11 @@
+Output: Simple BOM
+Type  : SimpleBOM
+From  : Project [ESP8266-Deskop_Power.PrjPcb]
+   Generated File[ESP8266-Deskop_Power.BOM]
+   Generated File[ESP8266-Deskop_Power.CSV]
+
+
+Files Generated   : 2
+Documents Printed : 0
+
+Finished Output Generation At 20:17:34 On 06-12-2024

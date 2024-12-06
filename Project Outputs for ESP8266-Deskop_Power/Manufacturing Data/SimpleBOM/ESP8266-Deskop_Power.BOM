@@ -1,0 +1,42 @@
+Bill of Material for 1_Power_Path.SchDoc
+On 06-12-2024 at 20:17:33
+
+ Comment             Pattern     Quantity  Components                   Description
+-----------------------------------------------------------------------------------
+
+ 1x06                PinHeader_1x06_P2.54mm_Vertical_No_3D    1    J1U                          
+ 2X04                PinHeader_2x04_P2.54mm_Vertical    1    J1I                          
+ 2X05                Front_Pannel_2x05_P2.54mm_Horizontal_Right    2    J1F, J2F                     
+ 2.54 Pitch          USB_Front_Pannel_2x05_P2.54mm_Horizontal_Right    2    J2C, J3C                     
+ 3.2 mm              MountingHole_3.2mm_M3_Pad_Via_Mask    4    H1H, H2H, H3H, H4H           
+ 217175-0001         USB-Type-C-6-Pin-SMT    1    J1C                          Connector USB Type C Female 6Positions 0.5mm Right Angle SMT Embossed T/R - Tape and Reel
+ AC0603FR-07100KL    R0603-MFG        2    R1P, R2P                     SMD Chip Resistor, 100 kOhm, ± 1%, 100 mW, 0603 [1608 Metric], Thick Film, General Purpose
+ AC0603FR-07100RL    R0603-MFG        3    R1M, R2M, R3M                SMD Chip Resistor, 100 Ohm, ± 1%, 100 mW, 0603 [1608 Metric], Thick Film, General Purpose
+ BSS138NH6327        SOT-23-3-IPC_C    3    Q1M, Q2M, Q3M                Single N-Channel 60 V 3.5 Ohm 1 nC SIPMOS® Small Signal Mosfet - SOT-23
+ C0603C104K8RACTU    C0603-IPC_C_No_Silk    7    C1F, C1P, C2P, C3C, C3L, C5C Multilayer Ceramic Capacitor, 0.1 uF, 10 V, ± 10%, X7R, 0603 [1608 Metric]
+                                           C6C
+ CDSOT23-SRV05-4     SOT23-6-IPC_C    3    D1C, D1F, D2C                TVS DIODE 5V 15V SOT23-6
+ CL10A475KP8NNNC     C0603-IPC_C_No_Silk    2    C2C, C4C                     Multilayer Ceramic Capacitor, 4.7 uF, 10 V, ± 10%, X5R, 0603 [1608 Metric]
+ CR0603-FX-2002ELF   R0603-MFG        1    R4L                          SMD Chip Resistor, 20 kOhm, ± 1%, 100 mW, 0603 [1608 Metric], Thick Film, General Purpose
+ CRCW06035K10FKEA    R0603-MFG        2    R1C, R2C                     SMD Chip Resistor, 5.1 kOhm, ± 1%, 100 mW, 0603 [1608 Metric], Thick Film, General Purpose
+ ERJ-3EKF3302V       R0603-MFG        1    R3L                          Res Thick Film 0603 33K Ohm 1% 0.1W(1/10W) ±100ppm/C Pad SMD Automotive T/R
+ ESP8266 ESP-12-F    ESP8266 ESP-12-Large    1    IC1E                         ESP8266 ESP-12-F
+ EVP-AWED4A          PANASONIC EVPAW    2    SW1K, SW2K                   3.0MM X 2.0MM / 3.3N / 0.15MM ST
+ F0603               R0603-IPC_C      2    F1P, F1U                     Fuse PPTC SMD 0603
+ GRM188R60J226MEA0D  C0603-IPC_C_No_Silk    2    C5L, C6L                     Multilayer Ceramic Capacitor, 22 uF, 6.3 V, ± 20%, X5R, 0603 [1608 Metric]
+ GRM188R61A226ME15D  C0603-IPC_C_No_Silk    1    C2L                          Multilayer Ceramic Capacitor, 22 uF, 10 V, ± 20%, X5R, 0603 [1608 Metric]
+ KGM15AR70J104KM     C0603-IPC_C_No_Silk    2    C1E, C2E                     Cap Cer 0.1UF 6.3V X7R 0603
+ MCR03EZPFX1691      R0603-MFG        1    R2L                          Surface Mount Thick Film Chip Resistor 0603 Case 1.69K Ohms 1% Tolerance 100 PPM
+ MCR03EZPFX2491      R0603-MFG        1    R5L                          Res Thick Film 0603 2.49K Ohm 1% 1/10W ±100ppm/°C Molded SMD SMD Paper T/R
+ MM3Z12VST1G         SOD-323          2    ZD1P, ZD2P                   MM3Z12VST1G Zener Diode, 12V 2% 200 mW SMT 2-Pin SOD-323 | ON Semiconductor MM3Z12VST1G
+ PMPB14XPZ           DFN2020MD-MFG    2    Q1P, Q2P                     PMPB14XPZ
+ RC0603FR-072K2L     R0603-MFG        2    R1I, R2I                     SMD Chip Resistor, 2.2 kOhm, ± 1%, 100 mW, 0603 [1608 Metric], Thick Film, General Purpose
+ RC0603FR-101KL      R0603-MFG        2    R1K, R4K                     SMD Chip Resistor, 1 kOhm, ± 1%, 100 mW, 0603 [1608 Metric], Thick Film, General Purpose
+ RC0603FR-0710KL     R0603-MFG       10    R1E, R1L, R2E, R3E, R4E, R4M SMD Chip Resistor, 10 kOhm, ± 1%, 100 mW, 0603 [1608 Metric], Thick Film, General Purpose
+                                           R5E, R5M, R6M, R7M
+ RC0603JR-070RL      R0603-MFG        2    R2K, R3C                     Zero Ohm Resistor, Jumper, 0603 [1608 Metric], Thick Film, 100 mW, 1 A, Surface Mount
+ SGM2019-ADJYN5G/TR  TSOT-23-5-IPC-A    1    U1L                          LDO U-Reg Adj 0, 3A SOT23-5
+ T491A476M006AT      CAP POL 1206_3216-MFG    1    C4L                          47uF Solid MnO2 Tantalum Electrolytic Capacitor; 6.3 V dc +/-20%; T491 Series
+ TCTAL1A476M8R       CAP POL 1206_3216-MFG    1    C1L                          Surface Mount Tantalum Capacitor, 47 uF, 10 V, ± 20%, -55 °C, 125 °C, 1206 [3216-12 Metric]
+ UART_TX_RX          UART_TX_RX_0603    1    RXTX1U                       UART RX/TX Pokayoke
+ YELLOW              LED_0603_YELLOW    1    D1L                          LED 0603 YELLOW SMD

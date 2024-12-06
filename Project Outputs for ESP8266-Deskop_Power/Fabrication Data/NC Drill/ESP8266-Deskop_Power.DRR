@@ -1,0 +1,19 @@
+----------------------------------------------------------------------------------------------------------------------------------
+NCDrill File Report For: ESP8266-Deskop_Power.PcbDoc   06-12-2024  20:18:17
+----------------------------------------------------------------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : ESP8266-Deskop_Power-RoundHoles.TXT
+ASCII SlotHoles File : ESP8266-Deskop_Power-SlotHoles.TXT
+
+Tool       Hole Size               Hole Tolerance               Hole Type       Hole Count   Plated         Tool Travel
+----------------------------------------------------------------------------------------------------------------------------------
+T1      0.3mm (12mil)                                             Round             66        PTH        233.87mm (9.21inch)
+T2      0.5mm (20mil)                                             Round             32        PTH        157.35mm (6.19inch)
+T3      0.6mm (24mil)                                             Slot              4         PTH        34.90mm (1.37inch)
+T4      1mm (39mil)                                               Round             50        PTH        214.84mm (8.46inch)
+T5      3.2mm (126mil)                                            Round             4         PTH        111.00mm (4.37inch)
+----------------------------------------------------------------------------------------------------------------------------------
+Totals                                                                              156
+
+Total Processing Time (hh:mm:ss) : 00:00:00

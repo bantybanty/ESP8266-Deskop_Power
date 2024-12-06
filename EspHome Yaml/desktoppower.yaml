@@ -1,0 +1,616 @@
+########################## Substitutions Section Start ##########################################
+
+substitutions: 
+  devicename: desktoppower
+  upper_devicename: DesktopPower
+  time_timezone: "Asia/Kolkata"
+
+#### Values in seconds (s) / millisecond (ms)
+  timeout_api : "120s"
+  timeout_ota : "300s"
+  timeout_wifi : "180s"
+  timeout_ap: "60s"
+  flash_write_interval: "15min"
+  status_interval: "60s"
+  update_interval_display: "1s"
+########################## Substitutions Section End ##########################################
+
+########################## Basic Section Start #########################################
+
+esphome:
+  name: "${devicename}"
+  comment: ${upper_devicename} Controller
+  platformio_options:
+    upload_speed: 115200
+    board_build.f_flash: 40000000L
+    board_upload.flash_size: 4MB
+    board_upload.maximum_ram_size: 81920
+    board_upload.maximum_size: 4194304
+    board_build.ldscript: eagle.flash.4m1m.ld
+  project:
+    name: "hassio.esp12_desktoppower"
+    version: "1.0.0"
+
+esp8266:
+  board: nodemcuv2
+
+# Enable logging
+logger:
+  level: DEBUG
+  logs:
+    json: ERROR
+    component: ERROR
+    
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret desktoppower_key
+  reboot_timeout: ${timeout_api} #default 15min
+  on_client_connected:
+    - logger.log:
+        format: "Client %s connected to API with IP %s"
+        args: ["client_info.c_str()", "client_address.c_str()"]
+  on_client_disconnected:
+    - logger.log: "API client disconnected!"
+
+## OTA
+ota:
+  - platform: esphome
+    password: !secret desktoppower_ota
+    on_begin:
+      then:
+        - logger.log: "OTA start"
+    on_progress:
+      then:
+        - logger.log:
+            format: "OTA progress %0.1f%%"
+            args: ["x"]
+    on_end:
+      then:
+        - logger.log: "OTA end"
+    on_error:
+      then:
+        - logger.log:
+            format: "OTA update error %d"
+            args: ["x"]
+
+## Safe Mode Section
+safe_mode:
+    boot_is_good_after: 1min
+    reboot_timeout: 1min
+    num_attempts: 5
+########################## Wifi Section Start #########################################
+# network:
+#     enable_ipv6: true
+    
+wifi:
+  domain: !secret domain
+  reboot_timeout:  ${timeout_wifi} ##default 15min
+  output_power: 20.0dB
+  power_save_mode: none
+  # fast_connect: true
+  networks:
+    - ssid: !secret wifi_ssid_iot
+      password: !secret wifi_password_iot
+      bssid: !secret wifi_bssid_iot
+      priority: 1
+      channel: 5
+    - ssid: !secret wifi_ssid_iot2
+      password: !secret wifi_password_iot2
+      bssid: !secret wifi_bssid_iot2
+      channel: 13
+      priority: 9
+  manual_ip:
+    static_ip: 10.10.33.116
+    gateway: !secret gateway
+    subnet: !secret subnet
+    dns1: !secret dns1
+    dns2: !secret dns2
+  on_connect:
+    then:
+      - logger.log: "Wifi Connected."
+      - script.execute: send_diagnostics
+  on_disconnect:
+    then:
+      - logger.log: "Wifi Disconnected."
+  ap:
+    ssid: "${upper_devicename} Hotspot"
+    password: !secret fallback_password
+    channel: 5 #1-14 #deafult 1
+    ap_timeout:  ${timeout_ap} # default 60sec
+
+########################## Wifi Section End ##########################################
+
+captive_portal:
+## No configuration variables.
+
+preferences:
+  flash_write_interval: ${flash_write_interval}
+
+## Http Port
+web_server:
+  local: true
+  version: 3
+  port: 80
+  auth:
+    username: !secret web_server_user
+    password: !secret web_server_password 
+
+## Time Sync Hassio  
+time:
+  - platform: homeassistant
+    id: ${devicename}_time
+    timezone: "${time_timezone}"
+    on_time_sync:
+      if:
+        condition:
+          time.has_time:
+        then:
+          - logger.log: "Time has been Synchronized and it is Valid!!!"
+        else:
+          - logger.log: "Time IS NOT VALID"
+    on_time:
+      # Reset daily counter at midnight
+      - seconds: 0
+        minutes: 0
+        hours: 0
+        days_of_week: MON-SUN
+        then:
+          - lambda: |-
+              id(${devicename}_uptime_seconds_day) = 0;
+              ESP_LOGD("main", "Daily uptime counter reset.");
+
+      # Reset weekly counter on Sunday at midnight
+      - seconds: 0
+        minutes: 0
+        hours: 0
+        days_of_week: SUN
+        then:
+          - lambda: |-
+              id(${devicename}_uptime_seconds_week) = 0;
+              ESP_LOGD("main", "Weekly uptime counter reset.");
+
+      # Reset monthly counter at the start of each month
+      - seconds: 0
+        minutes: 0
+        hours: 0
+        days_of_month: 1
+        then:
+          - lambda: |-
+              id(${devicename}_uptime_seconds_month) = 0;
+              ESP_LOGD("main", "Monthly uptime counter reset.");
+  ## When using MQTT
+  # - platform: sntp
+  #   id: ${devicename}_time
+  #   timezone: "${time_timezone}"
+  #   servers:
+  #     - 10.10.33.1
+  #     - 0.in.pool.ntp.org
+  #     - time.google.com
+  #   on_time_sync:
+  #     if:
+  #       condition:
+  #         time.has_time:
+  #       then:
+  #         - logger.log: "Time has been set and is valid!"
+  #       else:
+  #         - logger.log: "Time IS NOT VALID"
+
+status_led:
+  pin:
+    number: D4
+    inverted: true
+    #allow_other_uses: True
+    
+## Mqtt Setup  
+# mqtt: 
+#   client_id: ${devicename}
+#   broker: !secret mqttaddress
+#   username: !secret mqttusername
+#   password: !secret mqttuserpass
+
+
+########################## Basic Section End #########################################
+
+########################## BUS/PINS Initialization Section Start ##########################################
+# ESP-01: scl: 0, sda: 2
+# EPS-12: scl: 5, sda: 4
+## I2C Pins
+# i2c:
+#   sda: D2
+#   scl: D1
+#   scan: True
+#   id: bus_a
+#   # frequency: 50kHZ ## Default
+#   frequency: 400kHZ
+
+globals:
+  # Total uptime (never resets)
+  - id: ${devicename}_uptime_seconds_total
+    type: int
+    restore_value: yes   # Retain the total uptime
+    initial_value: '0'
+
+  # Resettable uptime counters (retain across reboots)
+  - id: ${devicename}_uptime_seconds_day
+    type: int
+    restore_value: yes   # Retain the daily uptime across reboots
+    initial_value: '0'
+  - id: ${devicename}_uptime_seconds_week
+    type: int
+    restore_value: yes   # Retain the weekly uptime across reboots
+    initial_value: '0'
+  - id: ${devicename}_uptime_seconds_month
+    type: int
+    restore_value: yes   # Retain the monthly uptime across reboots
+    initial_value: '0'
+
+########################## BUS/PINS Initialization Section End ##########################################
+
+########################## Script Section Start ##########################################
+
+script:
+  - id: send_diagnostics
+    then:
+      - logger.log: "Sending diagnostics."
+      - component.update: ${devicename}_wifi_signal
+      - component.update: ${devicename}_wifi_signal_percentage
+      - component.update: ${devicename}_uptime
+      - component.update: ${devicename}_uptime_human
+      - component.update: ${devicename}_ip_address
+      - component.update: ${devicename}_connected_ssid
+      - component.update: ${devicename}_connected_bssid
+      - component.update: ${devicename}_wifi_scan_result
+      - component.update: ${devicename}_uptime_total_day
+      - component.update: ${devicename}_uptime_total_week
+      - component.update: ${devicename}_uptime_total_month
+      - component.update: ${devicename}_uptime_day
+      - component.update: ${devicename}_uptime_week
+      - component.update: ${devicename}_uptime_month
+########################## Script Section End ##########################################
+
+########################## Text Sensor Section Start ##########################################
+
+text_sensor:
+  - platform: version
+    name: "${upper_devicename} Version"
+    id: ${devicename}_version 
+  
+  - platform: template
+    name: "${upper_devicename} Uptime Human"
+    id: ${devicename}_uptime_human
+    entity_category: "diagnostic"
+    icon: mdi:clock-start
+    update_interval: $status_interval
+
+  - platform: wifi_info
+    ip_address:
+      name: "${upper_devicename} IP Address"
+      id: ${devicename}_ip_address
+      entity_category: "diagnostic"
+      update_interval: $status_interval
+
+    ssid:
+      name: "${upper_devicename} Connected SSID"
+      id: ${devicename}_connected_ssid
+      entity_category: "diagnostic"
+      update_interval: $status_interval
+
+    bssid:
+      name: "${upper_devicename} Connected BSSID"
+      id: ${devicename}_connected_bssid
+      entity_category: "diagnostic"
+      update_interval: $status_interval
+
+    mac_address:
+      name: "${upper_devicename} MAC"
+      id: ${devicename}_wifi_mac
+      entity_category: "diagnostic"
+
+    scan_results:
+      name: "${upper_devicename} Wifi Scan Result"
+      id: ${devicename}_wifi_scan_result
+      entity_category: "diagnostic"
+      update_interval: $status_interval
+
+  ## Resettable uptime sensors (resets daily, weekly, monthly, and retains values)
+  ## Uptime (Hours, Minutes, Seconds)
+  - platform: template
+    name: "${upper_devicename} Uptime Today"
+    id: ${devicename}_uptime_day
+    update_interval: $status_interval
+    lambda: |-
+      int seconds = id(${devicename}_uptime_seconds_day);
+      int hours = seconds / 3600;
+      int minutes = (seconds % 3600) / 60;
+      int secs = seconds % 60;
+      return (hours > 0) ? (to_string(hours) + "h " + to_string(minutes) + "m " + to_string(secs) + "s") 
+                         : (to_string(minutes) + "m " + to_string(secs) + "s");
+  
+  ## Uptime (Days, Hours, Minutes, Seconds)
+  - platform: template
+    name: "${upper_devicename} Uptime This Week"
+    id: ${devicename}_uptime_week
+    update_interval: $status_interval
+    lambda: |-
+      int seconds = id(${devicename}_uptime_seconds_week);
+      int days = seconds / 86400;
+      int hours = (seconds % 86400) / 3600;
+      int minutes = (seconds % 3600) / 60;
+      int secs = seconds % 60;
+      return (days > 0) ? (to_string(days) + "d " + to_string(hours) + "h " + to_string(minutes) + "m " + to_string(secs) + "s") 
+                        : (to_string(hours) + "h " + to_string(minutes) + "m " + to_string(secs) + "s");
+
+  ## Uptime (Weeks, Days, Hours, Minutes, Seconds)
+  - platform: template
+    name: "${upper_devicename} Uptime This Month"
+    id: ${devicename}_uptime_month
+    update_interval: $status_interval
+    lambda: |-
+      int seconds = id(${devicename}_uptime_seconds_month);
+      int weeks = seconds / 604800;
+      int days = (seconds % 604800) / 86400;
+      int hours = (seconds % 86400) / 3600;
+      int minutes = (seconds % 3600) / 60;
+      int secs = seconds % 60;
+      return (weeks > 0) ? (to_string(weeks) + "w " + to_string(days) + "d " + to_string(hours) + "h " + to_string(minutes) + "m " + to_string(secs) + "s") 
+                         : (to_string(days) + "d " + to_string(hours) + "h " + to_string(minutes) + "m " + to_string(secs) + "s");
+
+  ## Total uptime sensors (do not reset)
+  ## Total Uptime (Days, Hours, Minutes, Seconds)
+  - platform: template
+    name: "${upper_devicename} Uptime Total Day"
+    id: ${devicename}_uptime_total_day
+    update_interval: $status_interval
+    lambda: |-
+      int seconds = id(${devicename}_uptime_seconds_total);
+      int days = seconds / 86400;
+      int hours = (seconds % 86400) / 3600;
+      int minutes = (seconds % 3600) / 60;
+      int secs = seconds % 60;
+      return (days > 0) ? (to_string(days) + "d " + to_string(hours) + "h " + to_string(minutes) + "m " + to_string(secs) + "s")
+                        : (to_string(hours) + "h " + to_string(minutes) + "m " + to_string(secs) + "s");
+
+  ## Total Uptime (Weeks, Days, Hours, Minutes, Seconds)
+  - platform: template
+    name: "${upper_devicename} Uptime Total Week"
+    id: ${devicename}_uptime_total_week
+    update_interval: $status_interval
+    lambda: |-
+      int seconds = id(${devicename}_uptime_seconds_total);
+      int weeks = seconds / 604800;
+      int days = (seconds % 604800) / 86400;
+      int hours = (seconds % 86400) / 3600;
+      int minutes = (seconds % 3600) / 60;
+      int secs = seconds % 60;
+      return (weeks > 0) ? (to_string(weeks) + "w " + to_string(days) + "d " + to_string(hours) + "h " + to_string(minutes) + "m " + to_string(secs) + "s")
+                         : (to_string(days) + "d " + to_string(hours) + "h " + to_string(minutes) + "m " + to_string(secs) + "s");
+
+  ## Total Uptime (Months, Weeks, Days, Hours, Minutes, Seconds)
+  - platform: template
+    name: "${upper_devicename} Uptime Total Month"
+    id: ${devicename}_uptime_total_month
+    update_interval: $status_interval
+    lambda: |-
+      int seconds = id(${devicename}_uptime_seconds_total);
+      int months = seconds / 2592000;  // Assuming 30 days per month
+      int weeks = (seconds % 2592000) / 604800;
+      int days = (seconds % 604800) / 86400;
+      int hours = (seconds % 86400) / 3600;
+      int minutes = (seconds % 3600) / 60;
+      int secs = seconds % 60;
+      return (months > 0) ? (to_string(months) + "mo " + to_string(weeks) + "w " + to_string(days) + "d " + to_string(hours) + "h " + to_string(minutes) + "m " + to_string(secs) + "s")
+                          : (to_string(weeks) + "w " + to_string(days) + "d " + to_string(hours) + "h " + to_string(minutes) + "m " + to_string(secs) + "s");
+
+  ## Total Uptime (Years, Months, Weeks, Days, Hours, Minutes, Seconds)
+  - platform: template
+    name: "${upper_devicename} Uptime Total Year"
+    id: ${devicename}_uptime_total_year
+    update_interval: $status_interval
+    lambda: |-
+      int seconds = id(${devicename}_uptime_seconds_total);
+      int years = seconds / 31536000;  // Approx. seconds in a year (365 days)
+      int months = (seconds % 31536000) / 2592000;  // Approx. seconds in a month (30 days)
+      int weeks = (seconds % 2592000) / 604800;  // Approx. seconds in a week
+      int days = (seconds % 604800) / 86400;
+      int hours = (seconds % 86400) / 3600;
+      int minutes = (seconds % 3600) / 60;
+      int secs = seconds % 60;
+      return (years > 0) ? (to_string(years) + "y " + to_string(months) + "mo " + to_string(weeks) + "w " + to_string(days) + "d " +
+                            to_string(hours) + "h " + to_string(minutes) + "m " + to_string(secs) + "s")
+                         : (to_string(months) + "mo " + to_string(weeks) + "w " + to_string(days) + "d " + to_string(hours) + "h " +
+                            to_string(minutes) + "m " + to_string(secs) + "s");
+########################## Text Sensor Section End ##########################################
+
+########################## Button Section Start ##########################################
+button:
+  - platform: restart
+    name: "${upper_devicename} Restart"
+    id: ${devicename}_restart
+
+  - platform: safe_mode
+    name: "${upper_devicename} Safe Mode"
+    id: ${devicename}_safe_mode
+
+  - platform: shutdown
+    name: "${upper_devicename} Shutdown"
+    id: ${devicename}_shutdown
+
+  - platform: factory_reset
+    name: "${upper_devicename} Factory Reset"
+    id: ${devicename}_factory_reset
+  
+  - platform: template
+    name: "${upper_devicename} Status Report Request"
+    id: ${devicename}_status_report_request
+    #icon: "mdi:emoticon-outline"
+    entity_category: "diagnostic"
+    on_press:
+      - logger.log: "Status Requested."
+      - script.execute: send_diagnostics
+
+########################## Button Section END ##########################################
+
+########################## Switch Section Start ##########################################
+
+switch: 
+  ## Desktop Power On Switch
+  - platform: gpio
+    name: "${upper_devicename} Power ON"
+    id: ${devicename}_power_on
+    icon: "mdi:desktop-classic"
+    pin: ## Power button output pin
+      number: D1
+      inverted: no
+      allow_other_uses: True
+    restore_mode: ALWAYS_OFF
+    on_turn_on:
+      - delay: 150ms
+      - switch.turn_off: ${devicename}_power_on
+      - logger.log: "Desktop Switch Short Pressed!"
+      - logger.log: "Desktop Is Starting!"
+    # on_turn_off:
+    #   - logger.log: "Desktop Is Shuting Down!
+
+  ## Desktop Power Kill Switch
+  - platform: gpio
+    name: "${upper_devicename} Power Kill"
+    id: ${devicename}_power_kill
+    icon: "mdi:skull-crossbones"
+    pin: ## Power button output pin
+      number: D1
+      inverted: no
+      allow_other_uses: True
+    restore_mode: ALWAYS_OFF
+    on_turn_on:
+      - delay: 5000ms
+      - switch.turn_off: ${devicename}_power_kill
+      - logger.log: "Desktop Switch Long Pressed!"
+      - logger.log: "Desktop Hard Shutdown!"
+      
+  ## Desktop Restart Switch
+  - platform: gpio
+    name: "${upper_devicename} Reset"
+    id: ${devicename}_reset
+    icon: "mdi:restart-alert"
+    pin: D2 ## Reset button output pin
+    inverted: no
+    restore_mode: ALWAYS_OFF
+    on_turn_on:
+      - delay: 150ms
+      - switch.turn_off: ${devicename}_reset
+      - logger.log: "Desktop Reset Switch Pressed!"
+      - logger.log: "Desktop Is Restarting!"
+########################## Switch Section End ##########################################
+
+########################## Binary Sensor Section Start ###########################################
+
+binary_sensor:
+  ## Conneced or Ofline
+  - platform: status
+    name: "${upper_devicename} Status"
+    id: ${devicename}_status
+    entity_category: "diagnostic"
+
+  ## Desktop Power Status
+  - platform: gpio
+    pin: D7 ## Power detect input pin (readback from Power Led)
+    name: "${upper_devicename} Desktop Power State"
+    id: ${devicename}_desktop_power_state
+    device_class: power
+    publish_initial_state: true
+    on_state: ## Binary Sensor Automation
+      if:
+        condition:
+          binary_sensor.is_on: ${devicename}_desktop_power_state
+        then:
+          - logger.log: "Desktop Is On!"
+        else:
+          - logger.log: "Desktop Is Off!"
+
+########################## Binary Sensor Section End ###########################################
+
+########################## Sensor Section Start ################################################
+
+sensor:
+  ## Uptime sensor
+  - platform: uptime 
+    name: "${upper_devicename} Uptime"
+    id: ${devicename}_uptime
+    update_interval: ${status_interval}
+    force_update: True
+    on_raw_value:
+      then:
+        - text_sensor.template.publish:
+            id: ${devicename}_uptime_human
+            state: !lambda |-
+              int seconds = round(id(${devicename}_uptime).raw_state);
+              int days = seconds / (24 * 3600);
+              seconds = seconds % (24 * 3600);
+              int hours = seconds / 3600;
+              seconds = seconds % 3600;
+              int minutes = seconds /  60;
+              seconds = seconds % 60;
+              return (
+                (days ? to_string(days) + "d " : "") +
+                (hours ? to_string(hours) + "h " : "") +
+                (minutes ? to_string(minutes) + "m " : "") +
+                (to_string(seconds) + "s")
+              ).c_str();
+
+  ## Wifi Signal
+  - platform: wifi_signal 
+    name: "${upper_devicename} WiFi Signal"
+    id: ${devicename}_wifi_signal
+    entity_category: "diagnostic"
+    update_interval: ${status_interval}
+    force_update: True
+    filters:
+      - sliding_window_moving_average:
+          window_size: 5
+          send_every: 3
+          send_first_at: 1
+
+  ## Wifi Signal Percentage
+  - platform: template
+    name: "${upper_devicename} WiFi Signal Percentage"
+    id: ${devicename}_wifi_signal_percentage
+    icon: "mdi:wifi"
+    unit_of_measurement: "%"
+    entity_category: "diagnostic"
+    update_interval: ${status_interval}
+    force_update: True
+    lambda: >
+      auto signal = id(${devicename}_wifi_signal).state;
+      float perc = 0;
+      if (signal < -92.0)
+        perc = 100.0;
+      else if (signal > -21.0)
+        perc = 1.0;
+      else
+        perc = round(( -0.0154 * signal * signal )-( 0.3794 * signal ) + 98.182 );
+
+      if(perc <= 0)
+        return 0.0;
+      else if(perc >= 100)
+        return 100.0;
+      else
+        return perc;
+
+interval:
+  - interval: 1s
+    then:
+      - if:
+          condition:
+            binary_sensor.is_on: ${devicename}_desktop_power_state
+          then:
+            # Increment both total and resettable uptime counters every second
+            - lambda: |-
+                id(${devicename}_uptime_seconds_day) += 1;
+                id(${devicename}_uptime_seconds_week) += 1;
+                id(${devicename}_uptime_seconds_month) += 1;
+                id(${devicename}_uptime_seconds_total) += 1;
+
+########################## Sensor Section End ##########################################
+
+
