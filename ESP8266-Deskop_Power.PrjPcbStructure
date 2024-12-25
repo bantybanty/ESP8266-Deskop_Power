@@ -1,8 +1,8 @@
 Record=TopLevelDocument|FileName=1_Power_Path.SchDoc|SheetNumber=1
 Record=NoMainPathDocument|SourceDocument=1_Power_Path.SchDoc|FileName=2_LDO.SchDoc|SheetNumber=2
 Record=NoMainPathDocument|SourceDocument=1_Power_Path.SchDoc|FileName=3_ESP8266_Core.SchDoc|SheetNumber=3
-Record=NoMainPathDocument|SourceDocument=1_Power_Path.SchDoc|FileName=4_USB_TO_UART.SchDoc|SheetNumber=4
-Record=NoMainPathDocument|SourceDocument=1_Power_Path.SchDoc|FileName=5_Keys.SchDoc|SheetNumber=5
+Record=NoMainPathDocument|SourceDocument=1_Power_Path.SchDoc|FileName=4_UART.SchDoc|SheetNumber=4
+Record=NoMainPathDocument|SourceDocument=1_Power_Path.SchDoc|FileName=5_Keys_And_Status.SchDoc|SheetNumber=5
 Record=NoMainPathDocument|SourceDocument=1_Power_Path.SchDoc|FileName=6_I2C_Sensors.SchDoc|SheetNumber=6
 Record=NoMainPathDocument|SourceDocument=1_Power_Path.SchDoc|FileName=7_Mosfets.SchDoc|SheetNumber=7
 Record=NoMainPathDocument|SourceDocument=1_Power_Path.SchDoc|FileName=8_Front_Pannel_Con.SchDoc|SheetNumber=8

@@ -101,7 +101,7 @@ GenerateClassCluster=0
 DocumentUniqueId=ZVKPKRQA
 
 [Document4]
-DocumentPath=4_USB_TO_UART.SchDoc
+DocumentPath=4_UART.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
 AnnotationIndexControlEnabled=0
@@ -118,7 +118,7 @@ GenerateClassCluster=0
 DocumentUniqueId=YZWMLBAF
 
 [Document5]
-DocumentPath=5_Keys.SchDoc
+DocumentPath=5_Keys_And_Status.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
 AnnotationIndexControlEnabled=0
@@ -237,6 +237,23 @@ GenerateClassCluster=0
 DocumentUniqueId=ECEANLBT
 
 [Document12]
+DocumentPath=ESP8266-Deskop_Power_Copy.PcbDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=SBJFMPBP
+
+[Document13]
 DocumentPath=ESP8266-Deskop_Power.PCBDwf
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -253,7 +270,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=COXFSYOK
 
-[Document13]
+[Document14]
 DocumentPath=PCB_MANUFACTURING_ESP8266-Deskop_Power.PCBDwf
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -270,7 +287,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=SSEPQRKT
 
-[Document14]
+[Document15]
 DocumentPath=PCB_ASSEMBLY_ESP8266-Deskop_Power.PCBDwf
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -287,7 +304,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=GJBWDMPC
 
-[Document15]
+[Document16]
 DocumentPath=Job_Output_File.OutJob
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -304,7 +321,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document16]
+[Document17]
 DocumentPath=ESP8266-Deskop_Power.BomDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -321,7 +338,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document17]
+[Document18]
 DocumentPath=ESP8266-Deskop_Power.IntLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -1648,9 +1665,9 @@ UpdateVariants=1
 UpdateToLatestRevision=1
 PartTypes=0
 ComponentLibIdentifierKind0=Library Name And Type
-ComponentLibraryIdentifier0=Lib_LDO.IntLib
-ComponentDesignItemID0=SGM2019-ADJYN5G/TR
-ComponentSymbolReference0=SGM2019-ADJYN5G/TR
+ComponentLibraryIdentifier0=Lib_Register_0603.IntLib
+ComponentDesignItemID0=4.7K
+ComponentSymbolReference0=4.7K
 ComponentUpdate0=1
 ComponentIsDeviceSheet0=0
 FullReplace=1
@@ -1666,39 +1683,110 @@ RemoveParameters=0
 AddModels=1
 RemoveModels=1
 UpdateCurrentModels=1
-ParameterName0=Category
+ParameterName0=Case Code (Imperial)
 ParameterUpdate0=1
-ParameterName1=Comment
+ParameterName1=Case Code (Metric)
 ParameterUpdate1=1
-ParameterName2=Component Kind
+ParameterName2=Case/Package
 ParameterUpdate2=1
-ParameterName3=Description
+ParameterName3=Category
 ParameterUpdate3=1
-ParameterName4=Library Reference
+ParameterName4=Comment
 ParameterUpdate4=1
-ParameterName5=Manufacturer
+ParameterName5=Component Kind
 ParameterUpdate5=1
-ParameterName6=Manufacturer Part Number
+ParameterName6=ComponentLink1Description
 ParameterUpdate6=1
-ParameterName7=RoHS
+ParameterName7=ComponentLink1URL
 ParameterUpdate7=1
-ParameterName8=Stock 1
+ParameterName8=ComponentLink2Description
 ParameterUpdate8=1
-ParameterName9=Supplier 1
+ParameterName9=ComponentLink2URL
 ParameterUpdate9=1
-ParameterName10=Supplier Part Number 1
+ParameterName10=ComponentLink3Description
 ParameterUpdate10=1
+ParameterName11=ComponentLink3URL
+ParameterUpdate11=1
+ParameterName12=ComponentLink4Description
+ParameterUpdate12=1
+ParameterName13=ComponentLink4URL
+ParameterUpdate13=1
+ParameterName14=Description
+ParameterUpdate14=1
+ParameterName15=Features
+ParameterUpdate15=1
+ParameterName16=Lead Free
+ParameterUpdate16=1
+ParameterName17=Library Reference
+ParameterUpdate17=1
+ParameterName18=Manufacturer
+ParameterUpdate18=1
+ParameterName19=Manufacturer Part Number
+ParameterUpdate19=1
+ParameterName20=Max Operating Temperature
+ParameterUpdate20=1
+ParameterName21=Max Power Dissipation
+ParameterUpdate21=1
+ParameterName22=Min Operating Temperature
+ParameterUpdate22=1
+ParameterName23=Number of Terminations
+ParameterUpdate23=1
+ParameterName24=Packaging
+ParameterUpdate24=1
+ParameterName25=Power Rating
+ParameterUpdate25=1
+ParameterName26=Pricing 1
+ParameterUpdate26=1
+ParameterName27=Ratings
+ParameterUpdate27=1
+ParameterName28=RoHS
+ParameterUpdate28=1
+ParameterName29=RoHS Compliant
+ParameterUpdate29=1
+ParameterName30=Series
+ParameterUpdate30=1
+ParameterName31=Stock 1
+ParameterUpdate31=1
+ParameterName32=Supplier 1
+ParameterUpdate32=1
+ParameterName33=Supplier Part Number 1
+ParameterUpdate33=1
+ParameterName34=Temperature Coefficient
+ParameterUpdate34=1
+ParameterName35=Termination
+ParameterUpdate35=1
+ParameterName36=Tolerance
+ParameterUpdate36=1
+ParameterName37=Value
+ParameterUpdate37=1
+ParameterName38=Voltage Rating
+ParameterUpdate38=1
 ModelTypeGroup0=PCBLIB
 ModelTypeUpdate0=1
 ModelType0=PCBLIB
-ModelName0=TSOT-23-5-IPC-A
+ModelName0=R0603-IPC_A
 ModelUpdate0=1
 ModelType1=PCBLIB
-ModelName1=TSOT-23-5-IPC-B
+ModelName1=R0603-IPC_A_No_Silk
 ModelUpdate1=1
 ModelType2=PCBLIB
-ModelName2=TSOT-23-5-IPC-C
+ModelName2=R0603-IPC_B
 ModelUpdate2=1
+ModelType3=PCBLIB
+ModelName3=R0603-IPC_B_No_Silk
+ModelUpdate3=1
+ModelType4=PCBLIB
+ModelName4=R0603-IPC_C
+ModelUpdate4=1
+ModelType5=PCBLIB
+ModelName5=R0603-IPC_C_No_Silk
+ModelUpdate5=1
+ModelType6=PCBLIB
+ModelName6=R0603-MFG
+ModelUpdate6=1
+ModelType7=PCBLIB
+ModelName7=R0603-MFG_No_Silk
+ModelUpdate7=1
 
 [DatabaseUpdateOptions]
 SelectedOnly=0
@@ -1713,9 +1801,9 @@ Net3=NetName=+3VALW|NetColor=$000099FF
 Net4=NetName=+3VALW#|NetColor=clYellow
 Net5=NetName=+3VSUS|NetColor=clRed
 Net6=NetName=+5V_VBUS|NetColor=clYellow
-Net7=NetName=+5V_VSB|NetColor=$000099FF
+Net7=NetName=+5V_VSB|NetColor=$00000098
 Net8=NetName=+5VALW|NetColor=clRed
-Net9=NetName=+5VALW#|NetColor=$00000098
+Net9=NetName=+5VALW#|NetColor=clRed
 Net10=NetName=+5VBUS|NetColor=clRed
 Net11=NetName=+5VBUS_DRAIN|NetColor=$00000098
 Net12=NetName=+5VO|NetColor=clRed
@@ -1752,59 +1840,66 @@ Net42=NetName=FP_USB_2_N|NetColor=$00FF0099
 Net43=NetName=FP_USB_2_P|NetColor=$00FF0099
 Net44=NetName=FP_USB_2#_N|NetColor=clFuchsia
 Net45=NetName=FP_USB_2#_P|NetColor=clFuchsia
-Net46=NetName=GATE_VBUS|NetColor=clLime
-Net47=NetName=GATE_VSB|NetColor=clLime
-Net48=NetName=GPIO0|NetColor=clRed
-Net49=NetName=GPIO0(D3)|NetColor=$000099FF
-Net50=NetName=GPIO12|NetColor=$000099FF
-Net51=NetName=GPIO12(D6)|NetColor=clAqua
-Net52=NetName=GPIO13|NetColor=clLime
-Net53=NetName=GPIO13(D7)|NetColor=$00FF0099
-Net54=NetName=GPIO14|NetColor=clLime
-Net55=NetName=GPIO14(D5)|NetColor=clYellow
-Net56=NetName=GPIO15|NetColor=$00FF0099
-Net57=NetName=GPIO15(D8)|NetColor=clLime
-Net58=NetName=GPIO16|NetColor=$00E8864A
-Net59=NetName=GPIO16(D0)|NetColor=clRed
-Net60=NetName=GPIO2|NetColor=clYellow
-Net61=NetName=GPIO2(D4)|NetColor=clYellow
-Net62=NetName=HDD_LED-|NetColor=clAqua
-Net63=NetName=HDD_LED+|NetColor=clBlue
-Net64=NetName=IO0/GPIO0|NetColor=$00FF0099
-Net65=NetName=N00000|NetColor=$00FF0099
-Net66=NetName=NetC?_1|NetColor=clWhite
-Net67=NetName=NetC1L_1|NetColor=clYellow
-Net68=NetName=NetC1P_2|NetColor=clYellow
-Net69=NetName=NetC4P_2|NetColor=clYellow
-Net70=NetName=NetD1K_A|NetColor=clBlue
-Net71=NetName=NetF?_1|NetColor=$000099FF
-Net72=NetName=NetQ1M_1|NetColor=clLime
-Net73=NetName=NetQ1U_1|NetColor=$000099FF
-Net74=NetName=NetQ2M_1|NetColor=$000099FF
-Net75=NetName=NetQ2U_1|NetColor=$000099FF
-Net76=NetName=NetQ3M_1|NetColor=clLime
-Net77=NetName=NetR1K_2|NetColor=clLime
-Net78=NetName=NetR2L_2|NetColor=clFuchsia
-Net79=NetName=NetR4K_2|NetColor=$00E8864A
-Net80=NetName=nRST|NetColor=clRed
-Net81=NetName=Power_LED|NetColor=clYellow
-Net82=NetName=PWR_GATE|NetColor=clRed
-Net83=NetName=PWR_LED-|NetColor=clYellow
-Net84=NetName=PWR_LED+|NetColor=clLime
-Net85=NetName=PWR_SW_GATE|NetColor=$00000098
-Net86=NetName=PWR_SW-|NetColor=$00666666
-Net87=NetName=PWR_SW+|NetColor=clLime
-Net88=NetName=RST_SW_GATE|NetColor=clBlue
-Net89=NetName=RST_SW-|NetColor=$00666666
-Net90=NetName=RST_SW+|NetColor=clRed
-Net91=NetName=RTS|NetColor=$000099FF
-Net92=NetName=UART_CH40_RXD|NetColor=clBlue
-Net93=NetName=UART_CH40_TXD|NetColor=clBlue
-Net94=NetName=VBUS_IN|NetColor=$00000098
-Net95=NetName=VBUS_IN_DRAIN|NetColor=$00000098
-Net96=NetName=VCC|NetColor=$000099FF
-Net97=NetName=VUSB_IN|NetColor=$00000098
-Net98=NetName=VUSB_IN_DRAIN|NetColor=$00000098
+Net46=NetName=GATE_PMOS|NetColor=clLime
+Net47=NetName=GATE_VBUS|NetColor=clLime
+Net48=NetName=GATE_VSB|NetColor=clLime
+Net49=NetName=GPIO0|NetColor=clRed
+Net50=NetName=GPIO0(D3)|NetColor=$000099FF
+Net51=NetName=GPIO12|NetColor=$000099FF
+Net52=NetName=GPIO12(D6)|NetColor=clAqua
+Net53=NetName=GPIO13|NetColor=clLime
+Net54=NetName=GPIO13(D7)|NetColor=$00FF0099
+Net55=NetName=GPIO14|NetColor=clLime
+Net56=NetName=GPIO14(D5)|NetColor=clYellow
+Net57=NetName=GPIO15|NetColor=$00FF0099
+Net58=NetName=GPIO15(D8)|NetColor=clLime
+Net59=NetName=GPIO16|NetColor=$00E8864A
+Net60=NetName=GPIO16(D0)|NetColor=clRed
+Net61=NetName=GPIO2|NetColor=clYellow
+Net62=NetName=GPIO2(D4)|NetColor=clYellow
+Net63=NetName=HDD_LED-|NetColor=clAqua
+Net64=NetName=HDD_LED+|NetColor=clBlue
+Net65=NetName=IO0/GPIO0|NetColor=$00FF0099
+Net66=NetName=N00000|NetColor=$00FF0099
+Net67=NetName=NC|NetColor=$00000098
+Net68=NetName=NetC?_1|NetColor=clWhite
+Net69=NetName=NetC1L_1|NetColor=clYellow
+Net70=NetName=NetC1P_2|NetColor=clYellow
+Net71=NetName=NetC4P_2|NetColor=clYellow
+Net72=NetName=NetD1K_A|NetColor=clBlue
+Net73=NetName=NetF?_1|NetColor=$000099FF
+Net74=NetName=NetJ7I_4|NetColor=$00434343
+Net75=NetName=NetQ1M_1|NetColor=clLime
+Net76=NetName=NetQ1M_3|NetColor=$000099FF
+Net77=NetName=NetQ1U_1|NetColor=$000099FF
+Net78=NetName=NetQ2M_1|NetColor=$000099FF
+Net79=NetName=NetQ2M_3|NetColor=clRed
+Net80=NetName=NetQ2U_1|NetColor=$000099FF
+Net81=NetName=NetQ3M_1|NetColor=clLime
+Net82=NetName=NetR1K_2|NetColor=clLime
+Net83=NetName=NetR2L_2|NetColor=clFuchsia
+Net84=NetName=NetR4K_2|NetColor=$00E8864A
+Net85=NetName=nRST|NetColor=clRed
+Net86=NetName=Power_LED|NetColor=clYellow
+Net87=NetName=PWR_GATE|NetColor=clRed
+Net88=NetName=PWR_LED-|NetColor=clYellow
+Net89=NetName=PWR_LED+|NetColor=clLime
+Net90=NetName=PWR_SW_GATE|NetColor=$00000098
+Net91=NetName=PWR_SW-|NetColor=$00666666
+Net92=NetName=PWR_SW+|NetColor=$000099FF
+Net93=NetName=Relay_EXT_GND|NetColor=$00434343
+Net94=NetName=RELAY_GATE|NetColor=clAqua
+Net95=NetName=RST_SW_GATE|NetColor=clBlue
+Net96=NetName=RST_SW-|NetColor=$00666666
+Net97=NetName=RST_SW+|NetColor=clRed
+Net98=NetName=RTS|NetColor=$000099FF
+Net99=NetName=UART_CH40_RXD|NetColor=clBlue
+Net100=NetName=UART_CH40_TXD|NetColor=clBlue
+Net101=NetName=VBUS_IN|NetColor=$00000098
+Net102=NetName=VBUS_IN_DRAIN|NetColor=$00000098
+Net103=NetName=VCC|NetColor=$000099FF
+Net104=NetName=VUSB_IN|NetColor=$00000098
+Net105=NetName=VUSB_IN_DRAIN|NetColor=$00000098
 
 [Comparison Options]
 ComparisonOptions0=Kind=Net|MinPercent=75|MinMatch=3|ShowMatch=0|UseName=-1|InclAllRules=0
