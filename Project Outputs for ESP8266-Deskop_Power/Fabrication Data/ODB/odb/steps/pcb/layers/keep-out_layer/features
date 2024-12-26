@@ -3,6 +3,7 @@ UNITS=MM
 #
 #Feature symbol names
 #
+$0 rect20538.9988x6499.9997
 
 #
 #Feature attribute names
@@ -11,3 +12,4 @@ UNITS=MM
 #
 #Layer features
 #
+P 21.75550132 40.74999978 0 P 0 0

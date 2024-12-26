@@ -2,34 +2,20 @@
 FileName = ESP8266-Deskop_Power.GBR
 AutoAperture = True
 *************************************************************
-Generating : Top Layer
-      File : ESP8266-Deskop_Power.GTL
+Generating : Bottom Paste
+      File : ESP8266-Deskop_Power.GBP
 
-    Adding Layer      : Top Layer
+    Adding Layer      : Bottom Paste
+
+    Adding Layer      : Bottom Layer
 
     Adding Layer      : Multi-Layer
 
 
 Used DCodes :
-    D12
     D20
-    D21
-    D22
-    D23
-    D24
-    D25
-    D26
-    D27
     D28
-    D29
-    D30
-    D31
-    D32
-    D33
-    D34
-    D35
     D36
-    D37
     D38
     D39
     D40
@@ -37,23 +23,10 @@ Used DCodes :
     D42
     D43
     D44
-    D45
-    D46
-    D50
-    D51
-    D52
-    D75
-    D76
-    D77
-    D78
-    D79
     D80
     D81
     D82
     D83
-    D84
-    D85
-    D86
 *************************************************************
 
 *************************************************************
@@ -97,70 +70,6 @@ Used DCodes :
     D42
     D43
     D44
-    D45
-    D46
-*************************************************************
-
-*************************************************************
-Generating : Bottom Layer
-      File : ESP8266-Deskop_Power.GBL
-
-    Adding Layer      : Bottom Layer
-
-    Adding Layer      : Multi-Layer
-
-
-Used DCodes :
-    D30
-    D31
-    D33
-    D38
-    D41
-    D42
-    D43
-    D44
-    D45
-    D46
-    D75
-    D76
-    D77
-    D78
-    D79
-    D81
-    D82
-    D83
-    D85
-    D86
-    D87
-    D88
-    D89
-    D90
-*************************************************************
-
-*************************************************************
-Generating : Bottom Paste
-      File : ESP8266-Deskop_Power.GBP
-
-    Adding Layer      : Bottom Paste
-
-    Adding Layer      : Bottom Layer
-
-    Adding Layer      : Multi-Layer
-
-
-Used DCodes :
-    D30
-    D31
-    D33
-    D38
-    D41
-    D42
-    D43
-    D44
-    D45
-    D46
-    D89
-    D90
 *************************************************************
 
 *************************************************************
@@ -175,31 +84,20 @@ Generating : Bottom Solder
 
 
 Used DCodes :
-    D59
-    D60
+    D45
+    D53
     D62
+    D64
+    D65
+    D66
     D67
+    D68
     D69
     D70
-    D71
-    D72
-    D73
-    D74
-    D91
-    D92
-*************************************************************
-
-*************************************************************
-Generating : Bottom Overlay
-      File : ESP8266-Deskop_Power.GBO
-
-    Adding Layer      : Bottom Overlay
-
-
-Used DCodes :
-    D10
-    D11
-    D14
+    D86
+    D87
+    D88
+    D89
 *************************************************************
 
 *************************************************************
@@ -214,8 +112,10 @@ Generating : Top Solder
 
 
 Used DCodes :
-    D20
-    D39
+    D29
+    D35
+    D45
+    D46
     D47
     D48
     D49
@@ -240,10 +140,18 @@ Used DCodes :
     D68
     D69
     D70
-    D71
-    D72
-    D73
-    D74
+*************************************************************
+
+*************************************************************
+Generating : Bottom Overlay
+      File : ESP8266-Deskop_Power.GBO
+
+    Adding Layer      : Bottom Overlay
+
+
+Used DCodes :
+    D10
+    D13
 *************************************************************
 
 *************************************************************
@@ -263,11 +171,98 @@ Used DCodes :
 *************************************************************
 
 *************************************************************
+Generating : Bottom Layer
+      File : ESP8266-Deskop_Power.GBL
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D13
+    D20
+    D28
+    D36
+    D38
+    D39
+    D40
+    D41
+    D42
+    D43
+    D44
+    D71
+    D72
+    D73
+    D75
+    D76
+    D77
+    D78
+    D79
+    D80
+    D81
+    D82
+    D83
+    D84
+    D85
+*************************************************************
+
+*************************************************************
+Generating : Top Layer
+      File : ESP8266-Deskop_Power.GTL
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D12
+    D13
+    D20
+    D21
+    D22
+    D23
+    D24
+    D25
+    D26
+    D27
+    D28
+    D29
+    D30
+    D31
+    D32
+    D33
+    D34
+    D35
+    D36
+    D37
+    D38
+    D39
+    D40
+    D41
+    D42
+    D43
+    D44
+    D54
+    D55
+    D56
+    D71
+    D72
+    D73
+    D74
+    D75
+    D76
+    D77
+    D78
+*************************************************************
+
+*************************************************************
 Generating : Profile
       File : ESP8266-Deskop_Power.GM
 
 
 Used DCodes :
-    D93
+    D90
 *************************************************************
 
